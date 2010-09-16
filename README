@@ -1,0 +1,9 @@
+Peg Game Challenge
+
+If you go to the Cracker Barrel restaurants across the United States, there will be a peg game at your table. The peg game is an equilateral triangle with 15 holes and 14 pegs. You may jump a peg over another peg and remove the "hopped" peg; there are no moves remaining when moving in this way ceases to be possible. You may start the initial missing peg at any location. The ultimate goal is to find a solution where only one peg remains.
+
+While at Cracker Barrel yesterday, I found a two peg solution. The challenge I issue is this: find a one peg solution programatically. That's it. :) Pretty much anything is within bounds other than looking up the solution on Google and hard-coding it. Brute force attacks are completely acceptable (there's a reasonably limited number of moves).
+
+If you attempt this challenge, add your code to this repository by using a file or directory with your name (so as not to interfere with someone else's work).
+
+Enjoy!
