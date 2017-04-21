@@ -1,0 +1,60 @@
+import copy
+
+def runTask(N=5, empty=0):
+    def calcJumps(x):
+        L1 = 0
+        while ls[L1] <= x: L1 += 1
+        L1 -= 1
+        res = []
+        if L1 < N - 2:
+            left = (ls[L1 + 2] + x - ls[L1], ls[L1 + 1] + x - ls[L1])
+            right = (left[0] + 2, left[1] + 1)
+            res += [left, right]
+        if L1 > 1:
+            right = (ls[L1 - 2] + x - ls[L1], ls[L1 - 1] + x - ls[L1])
+            if ls[L1 - 2] <= right[0] < ls[L1 - 1]: res += [right]
+            left = (right[0] - 2, right[1] - 1)
+            if ls[L1 - 2] <= left[0] < ls[L1 - 1]: res += [left]
+        if x - 2 >= ls[L1]:
+            res += [(x - 2, x - 1)]
+        if x + 2 < ls[L1] + L1 + 1:
+            res += [(x + 2, x + 1)]
+        return res
+
+    def solve(board, empty=0):
+        def inner(path):
+            if sum(path[-1]) == 1 and path[-1][empty]:
+                return path
+            else:
+                for i, e in enumerate(path[-1]):
+                    if e:
+                        for jump in calcJumps(i):
+                            jt, jo = jump
+                            if not path[-1][jt] and path[-1][jo]:
+                                b = copy.copy(path[-1])
+                                b[jt] = True
+                                b[jo] = False
+                                b[i] = False
+                                p = inner(path + [b])
+                                if p: return p
+            return None
+        return inner([board])
+
+    def printBoard(board):
+        for l in range(N):
+            lineSize = l + 1
+            print ' ' * (N - lineSize) + ' '.join([('o' if board[i] else '_') for i in range(ls[l], ls[l] + lineSize)])
+
+    def printSolution(path):
+        for p in path:
+            printBoard(p)
+            print '_' * N * 2
+
+    ls = [0]
+    for i in range(N): ls.append(ls[-1] + len(ls))
+    boardSize = ls[-1]
+    board = [True] * boardSize
+    board[empty] = False
+    printSolution(solve(board, empty=empty))
+
+runTask(5, 12)
